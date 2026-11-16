@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daniela Love Potion + Country Polyamory Game</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+  body{background:#0a0a1a;color:#fff;padding:14px}
+  .wrap{max-width:950px;margin:auto}
+  .header{text-align:center;background:linear-gradient(135deg,#ff00a8,#7a00ff,#00ffcc);padding:18px;border-radius:18px}
+  .header h1{font-size:26px}
+  .nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+  .nav button{padding:11px 14px;border:none;border-radius:10px;font-weight:bold;cursor:pointer;background:#222;color:#fff}
+  .nav button.active{background:#ff00a8;color:#fff}
+  .nav button:hover{background:#ffe600;color:#000}
+  .stats{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+  .card{flex:1;min-width:120px;background:#161d3a;border:1px solid #333;border-radius:14px;padding:12px;text-align:center}
+  .card b{font-size:22px;color:#ffe600}
+  .timer{font-size:30px;font-weight:900;color:#ff3b6b}
+  button{padding:11px 14px;border:none;border-radius:10px;font-weight:bold;cursor:pointer;margin:4px}
+  .btn{background:#ffe600}.btn2{background:#00ff88}.btn3{background:#ff3b6b;color:#fff}.btn4{background:#7a5cff;color:#fff}.btn5{background:#00ccff}
+  .bottle{font-size:90px}
+  .bottle.shake{animation:shake .4s}
+  @keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin:12px 0}
+  .ing,.countryBtn{background:#222;border:2px solid #444;border-radius:12px;padding:12px;text-align:center;cursor:pointer;transition:.2s}
+  .ing:hover,.countryBtn:hover{transform:scale(1.05);border-color:#ffe600;box-shadow:0 0 12px #ffe600}
+  .ing.correct{border-color:#00ff88;background:#003311}
+  .ing.wrong,.countryBtn.wrong{border-color:#ff3b6b;background:#330000}
+  .ing.used{opacity:.4;pointer-events:none}
+  .progress{height:12px;background:#222;border-radius:10px;overflow:hidden;margin:8px 0}
+  .fill{height:100%;background:linear-gradient(90deg,#ff00a8,#ffe600);width:0%;transition:width .3s}
+  .box{background:#121833;border-radius:16px;padding:16px;margin:12px 0;border:2px solid #ff00a8}
+  .box2{background:#0f2a1a;border-radius:16px;padding:16px;margin:12px 0;border:2px solid #00ff88}
+  .log{background:#000;padding:12px;border-radius:12px;min-height:55px;font-size:14px;line-height:1.5}
+  .hidden{display:none}
+  .reviewGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:600px){.reviewGrid{grid-template-columns:1fr}}
+  .pill{display:inline-block;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:bold;margin:2px}
+  .poly{background:#ff00a8}.mono{background:#555}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <h1>🧪 DANIELA LOVE POTION + 🌍 COUNTRY GAME 🧪</h1>
+    <p>Game 1: Level 1-100 Potion | Game 2: Polyamory Countries Only - Wag Monogamy!</p>
+    <p style="font-size:12px;opacity:.8">Fictional Game - Random fictional names only - Consent only - Enjoy!</p>
+    <button class="btn2" onclick="speak('Welcome to Daniela Love Potion and Country Polyamory Game! Enjoy!')">🔊 PLAY INTRO VOICE</button>
+  </div>
+
+  <div class="nav">
+    <button class="active" onclick="showTab('game1',this)">🧪 GAME 1: POTION 1-100</button>
+    <button onclick="showTab('game2',this)">🌍 GAME 2: COUNTRY POLYAMORY</button>
+  </div>
+
+  <!-- ============ GAME 1 ============ -->
+  <div id="game1">
+    <div class="stats">
+      <div class="card">⏰ TIME<br><div class="timer" id="timer1">15</div><span>seconds</span></div>
+      <div class="card">🏆 LEVEL<br><b id="level1">1 / 100</b></div>
+      <div class="card">❤️ LIVES<br><b id="lives1" style="color:#ff3b6b">3</b></div>
+      <div class="card">⭐ POINTS<br><b id="points1">0</b></div>
+      <div class="card">💘 PARTNERS<br><b id="partners1" style="color:#ff00a8">0</b></div>
+    </div>
+    <div class="progress"><div class="fill" id="fill1"></div></div>
+    <div style="text-align:center"><button class="btn" onclick="startGame1()">▶ START GAME 1</button> <button class="btn3" onclick="resetGame1()">↺ RESET</button></div>
+
+    <div class="box" style="text-align:center">
+      <h2 id="charName">Press START to meet first single...</h2>
+      <p id="charDesc" style="opacity:.8">Fictional character - New name every level, hindi na uulit past names</p>
+      <p id="consentText" style="font-weight:bold;margin:8px 0"></p>
+      <div id="consentBtns" style="display:none">
+        <button class="btn2" onclick="giveConsent(true)">✅ YES - I Consent</button>
+        <button class="btn3" onclick="giveConsent(false)">❌ NO - Respect Me</button>
+      </div>
+    </div>
+
+    <div class="box" style="text-align:center">
+      <div class="bottle" id="bottle">🧪</div>
+      <h3>Daniela Bottle - Level <span id="bottleLevel">1</span></h3>
+      <p>Target Formula: <b id="targetFormula" style="color:#ffe600">??? - Consent muna!</b></p>
+      <p>Your Mix: <b id="yourMix">Empty</b></p>
+      <p id="brewMsg"></p>
+      <button class="btn4" onclick="shakeBottle()">[STRIPPED 3 bytes] Shake Bottle - 3x</button>
+      <button class="btn5" onclick="sprayPotion()">💨 Spray Once - In Game Only</button>
+    </div>
+
+    <h3>🧪 Ingredients - Click in order, mabilisan!</h3>
+    <div class="grid" id="ingGrid"></div>
+    <div class="log" id="log1">Game 1 Log: Press START...</div>
+    <div id="finalBox1" style="display:none;background:#121833;padding:20px;border-radius:16px;text-align:center;margin-top:12px"></div>
+  </div>
+
+  <!-- ============ GAME 2 ============ -->
+  <div id="game2" class="hidden">
+    <div class="box2">
+      <h2>🌍 GAME 2: COUNTRY POLYAMORY QUIZ</h2>
+      <p><b>Goal:</b> Review muna sa mga countries, saka mabilisang sagot! Pwede gayumahin (in game) = <span class="pill poly">POLYAMORY / POLYGAMY ALLOWED</span> lang!</p>
+      <p><b>WAG gayumahin = <span class="pill mono">MONOGAMY ONLY</span></b> — kasi ex vs third party yun, enjoy pero respect!</p>
+      <p style="font-size:12px;opacity:.8">Educational trivia about laws - iba-iba per bansa, at kahit allowed sa law, need pa rin consent ng lahat.</p>
+    </div>
+
+    <div class="stats">
+      <div class="card">⏰ TIME<br><div class="timer" id="timer2">10</div><span>seconds per question</span></div>
+      <div class="card">🏆 QUESTION<br><b id="qNum">0 / 20</b></div>
+      <div class="card">❤️ LIVES<br><b id="lives2" style="color:#ff3b6b">3</b></div>
+      <div class="card">⭐ POINTS<br><b id="points2">0</b></div>
+      <div class="card">✅ CORRECT<br><b id="correct2" style="color:#00ff88">0</b></div>
+    </div>
+    <div class="progress"><div class="fill" id="fill2" style="background:linear-gradient(90deg,#00ff88,#ffe600)"></div></div>
+
+    <div style="text-align:center">
+      <button class="btn" onclick="showReview()">📖 REVIEW MUNA - COUNTRIES</button>
+      <button class="btn2" onclick="startGame2()">▶ START QUIZ - MABILISAN!</button>
+      <button class="btn3" onclick="resetGame2()">↺ RESET</button>
+    </div>
+
+    <div id="reviewBox" class="box2">
+      <h3>📖 REVIEW - Basahin muna bago quiz!</h3>
+      <div class="reviewGrid">
+        <div><h4>💘 <span class="pill poly">POLY / POLYGAMY ALLOWED</span></h4><p id="polyList"></p><p style="font-size:12px;opacity:.8">Sa mga bansang ito, may lugar / batas na pumapayag sa polygamy (karaniwang polygyny - 1 lalaki, multiple asawa) - pero may rules, need consent, registration, etc. Hindi ito automatic na polyamory for all.</p></div>
+        <div><h4>🚫 <span class="pill mono">MONOGAMY ONLY</span></h4><p id="monoList"></p><p style="font-size:12px;opacity:.8">Sa mga bansang ito, 1 partner lang ang legal na kasal. Pag may ex + third party pa, bawal - ex vs third party yun. Wag gayumahin!</p></div>
+      </div>
+      <p><b>Tip:</b> Philippines = MONOGAMY ONLY! USA, UK, Japan, Korea, China, Australia = MONOGAMY ONLY!</p>
+    </div>
+
+    <div id="quizBox" class="box2" style="display:none;text-align:center">
+      <h2 id="quizQ">Question...</h2>
+      <p>Polyamory country ba ito? Mabilisan! Seconds lang!</p>
+      <p id="quizCountry" style="font-size:38px;font-weight:900;color:#ffe600;margin:10px 0"></p>
+      <button class="btn2" style="font-size:18px;padding:14px 22px" onclick="answerCountry(true)">💘 YES - POLYAMORY - PWEDE!</button>
+      <button class="btn3" style="font-size:18px;padding:14px 22px" onclick="answerCountry(false)">🚫 NO - MONOGAMY - WAG!</button>
+      <p id="quizFeedback"></p>
+    </div>
+
+    <div class="log" id="log2">Game 2 Log: Review muna, saka START QUIZ...</div>
+    <div id="finalBox2" style="display:none;background:#121833;padding:20px;border-radius:16px;text-align:center;margin-top:12px"></div>
+  </div>
+</div>
+
+<script>
+// ===== SHARED =====
+function speak(t,rate=1){ try{ speechSynthesis.cancel(); let u=new SpeechSynthesisUtterance(t); u.rate=rate; speechSynthesis.speak(u); }catch(e){} }
+function playSound(type){
+  try{
+    let ctx=new (window.AudioContext||window.webkitAudioContext)();
+    let o=ctx.createOscillator(); let g=ctx.createGain(); o.connect(g); g.connect(ctx.destination);
+    if(type==='correct'){ o.frequency.value=880; o.type='sine'; }
+    if(type==='wrong'){ o.frequency.value=200; o.type='sawtooth'; }
+    if(type==='levelup'){ o.frequency.value=1200; o.type='triangle'; }
+    if(type==='shake'){ o.frequency.value=400; o.type='square'; }
+    if(type==='spray'){ o.frequency.value=1500; o.type='sine'; }
+    if(type==='gameover'){ o.frequency.value=100; o.type='sawtooth'; }
+    g.gain.value=0.15; o.start(); o.stop(ctx.currentTime+0.3);
+  }catch(e){}
+}
+function showTab(id,btn){
+  document.getElementById('game1').classList.add('hidden');
+  document.getElementById('game2').classList.add('hidden');
+  document.getElementById(id).classList.remove('hidden');
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ===== GAME 1 =====
+const FIRST=["Aria","Luna","Maya","Sofia","Chloe","Zoe","Nina","Ella","Isla","Ruby","Mia","Lily","Ava","Grace","Ivy","Rosa","Dana","Kira","Tara","Jade","Nova","Skye","Pearl","Faith","Hope","Joy","Star","Rain","Summer","Autumn","Winter","Spring","Clover","Willow","Hazel","Olive","Violet","Scarlet","Amber","Jasmine","Selene","Aurora","Celeste","Freya","Lena","Nadia","Priya","Aisha","Yuki","Hana","Sakura","Mei","Lin","Ana","Maria","Carmen","Lucia","Elena","Bianca","Carla","Diana","Elsa","Fiona","Giselle","Hannah","Iris","Julia","Karen","Laura","Mona","Nora","Olga","Paula","Rita","Sara","Tina","Uma","Vera","Wendy","Xena","Yara","Zara","Bella","Cindy","Daisy","Emma","Faye","Gwen","Holly"];
+const LAST=["Santos","Reyes","Cruz","Garcia","Lopez","Torres","Flores","Ramos","Diaz","Mendoza","Villanueva","Aquino","Castillo","Fernandez","Gonzales","Herrera","Jimenez","Luna","Morales","Navarro","Ortiz","Perez","Quinto","Rivera","Salazar","Tan","Uy","Vega","Zamora","Abad","Bautista","Corpuz","Domingo","Estrada","Fuentes","Gomez","Hilario","Ibarra","Javier","Kang","Lim","Manalo","Ocampo","Padilla","Rosales","Sison","Tiu","Valdez","Wong","Yap"];
+const INGS=[
+  {name:"🌸 Moon Petal",id:"moon"},
+  {name:"✨ Star Dust",id:"star"},
+  {name:"🍯 Honey Drop",id:"honey"},
+  {name:"🌹 Rose Essence",id:"rose"},
+  {name:"💧 Crystal Water",id:"water"},
+  {name:"🍓 Berry Glow",id:"berry"},
+  {name:"🌿 Mint Leaf",id:"mint"},
+  {name:"💜 Lavender Mist",id:"lavender"},
+  {name:"🍋 Lemon Spark",id:"lemon"},
+  {name:"🦋 Butterfly Wing",id:"butterfly"},
+  {name:"🌙 Night Dew",id:"dew"},
+  {name:"🔮 Magic Sparkle",id:"magic"}
+];
+let lv1=1, lives1=3, pts1=0, partners1=0;
+let usedNames=new Set(), curChar="", recipe=[], mix=[], time1=15, timer1Int=null, hasConsent=false, shakeCount=0;
+function getRandomName(){
+  for(let i=0;i<200;i++){
+    let f=FIRST[Math.floor(Math.random()*FIRST.length)];
+    let l=LAST[Math.floor(Math.random()*LAST.length)];
+    let full=f+" "+l;
+    if(!usedNames.has(full)){ usedNames.add(full); return full; }
+  }
+  return "Mystery Single "+lv1;
+}
+function updateHUD1(){
+  document.getElementById('level1').textContent=lv1+" / 100";
+  document.getElementById('lives1').textContent=lives1;
+  document.getElementById('points1').textContent=pts1;
+  document.getElementById('partners1').textContent=partners1;
+  document.getElementById('bottleLevel').textContent=lv1;
+  document.getElementById('fill1').style.width=(lv1/100*100)+"%";
+}
+function startGame1(){ lv1=1; lives1=3; pts1=0; partners1=0; usedNames.clear(); document.getElementById('finalBox1').style.display='none'; updateHUD1(); speak("Game 1 started! Level 1!"); playSound('levelup'); setupLevel1(); }
+function resetGame1(){ clearInterval(timer1Int); location.reload(); }
+function setupLevel1(){
+  if(lv1>100){ winGame1(); return; }
+  if(lives1<=0){ gameOver1(); return; }
+  curChar=getRandomName();
+  let cnt=lv1<=25?3:lv1<=50?4:lv1<=75?5:6;
+  recipe=[...INGS].sort(()=>Math.random()-0.5).slice(0,cnt);
+  mix=[]; hasConsent=false; shakeCount=0;
+  document.getElementById('charName').textContent="💘 Level "+lv1+" - Meet: "+curChar;
+  document.getElementById('charDesc').textContent="Single • Fictional • New name, hindi past name!";
+  document.getElementById('consentText').textContent="❓ "+curChar+": Gusto mo ba makipag-usap at sumali with consent?";
+  document.getElementById('consentBtns').style.display='block';
+  document.getElementById('targetFormula').textContent="??? - Consent muna!";
+  document.getElementById('yourMix').textContent="Empty";
+  document.getElementById('brewMsg').textContent="";
+  document.getElementById('bottle').textContent="🧪";
+  renderIngs(true);
+  startTimer1();
+  document.getElementById('log1').textContent="Game 1 Log: Level "+lv1+" - New single: "+curChar+" - Kausapin muna for consent!";
+}
+function renderIngs(locked){
+  let g=document.getElementById('ingGrid'); g.innerHTML="";
+  [...INGS].sort(()=>Math.random()-0.5).forEach(ing=>{
+    let d=document.createElement('div'); d.className='ing'+(locked?' used':''); d.textContent=ing.name;
+    d.onclick=()=>{ if(locked){ speak("Consent muna!"); return; } pickIng(ing,d); };
+    g.appendChild(d);
+  });
+}
+function giveConsent(yes){
+  document.getElementById('consentBtns').style.display='none';
+  if(yes){
+    hasConsent=true;
+    document.getElementById('consentText').textContent="✅ "+curChar+": YES, I consent! With respeto at honesty!";
+    document.getElementById('targetFormula').textContent=recipe.map(r=>r.name).join(" → ");
+    renderIngs(false); playSound('correct'); speak("Yes! "+curChar+" says yes! Brew now!");
+    document.getElementById('log1').textContent="Consent YES from "+curChar+"! Formula revealed! Bilisan mo!";
+  } else {
+    document.getElementById('consentText').textContent="❌ "+curChar+": NO. Respect my choice!";
+    speak("No! Respect! Next single!"); playSound('wrong');
+    document.getElementById('log1').textContent=curChar+" said NO. Respect! Next single!";
+    setTimeout(()=>{ lv1++; updateHUD1(); setupLevel1(); },1600);
+  }
+}
+function pickIng(ing,el){
+  if(!hasConsent) return;
+  if(mix.length>=recipe.length) return;
+  let exp=recipe[mix.length];
+  if(ing.id===exp.id){
+    mix.push(ing); el.classList.add('correct'); el.classList.add('used');
+    document.getElementById('yourMix').textContent=mix.map(c=>c.name).join(" → ");
+    playSound('correct'); speak(ing.name+" correct!");
+    if(mix.length===recipe.length) brewSuccess();
+  } else {
+    el.classList.add('wrong'); lives1--; updateHUD1(); playSound('wrong'); speak("Wrong! Minus 1 life!");
+    document.getElementById('log1').textContent="❌ MALI! Dapat "+exp.name+" -1 Life! Lives: "+lives1;
+    document.getElementById('brewMsg').textContent="❌ Mali! -1 Life!";
+    if(lives1<=0){ gameOver1(); return; }
+    setTimeout(()=>{ lv1++; updateHUD1(); setupLevel1(); },1500);
+  }
+}
+function brewSuccess(){
+  clearInterval(timer1Int);
+  let add=lv1<=25?100:lv1<=50?200:lv1<=75?300:500;
+  pts1+=add; partners1++;
+  document.getElementById('bottle').textContent="💖🧪💖";
+  document.getElementById('brewMsg').textContent="✅ PERFECT BREW! +"+add+" points!";
+  playSound('levelup'); speak("Perfect brew! Level complete!");
+  document.getElementById('log1').textContent="✅ Level "+lv1+" COMPLETE! "+curChar+" - Partner with consent!";
+  updateHUD1();
+  setTimeout(()=>{ lv1++; updateHUD1(); setupLevel1(); },2000);
+}
+function shakeBottle(){
+  if(!hasConsent){ speak("Consent muna!"); return; }
+  shakeCount++;
+  let b=document.getElementById('bottle'); b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake');
+  playSound('shake'); speak("Shake "+shakeCount);
+  document.getElementById('log1').textContent="Shake "+shakeCount+" / 3";
+  if(shakeCount===3) speak("3 times shake complete!");
+}
+function sprayPotion(){
+  if(!hasConsent){ speak("Consent muna!"); return; }
+  if(mix.length!==recipe.length){ speak("Buuin mo muna formula!"); return; }
+  playSound('spray'); speak("Spray once! In game only!");
+  document.getElementById('log1').textContent="💨 Spray Once - In game only! With consent!";
+}
+function startTimer1(){
+  clearInterval(timer1Int);
+  time1=lv1<=25?15:lv1<=50?12:lv1<=75?10:8;
+  document.getElementById('timer1').textContent=time1;
+  timer1Int=setInterval(()=>{
+    time1--; document.getElementById('timer1').textContent=time1;
+    if(time1<=0){
+      clearInterval(timer1Int); lives1--; updateHUD1(); playSound('wrong'); speak("Time up! Minus 1 life!");
+      document.getElementById('log1').textContent="⏰ TIME UP! Late! -1 Life! Lives: "+lives1;
+      if(lives1<=0){ gameOver1(); return; }
+      lv1++; updateHUD1(); setupLevel1();
+    }
+  },1000);
+}
+function gameOver1(){
+  clearInterval(timer1Int); playSound('gameover'); speak("Game over! Try again!");
+  let b=document.getElementById('finalBox1'); b.style.display='block';
+  b.innerHTML="<h2>💔 GAME OVER</h2><p>Level: "+lv1+" / 100<br>Points: "+pts1+"<br>Partners: "+partners1+"</p><button class='btn' onclick='startGame1()'>Try Again</button>";
+}
+function winGame1(){
+  clearInterval(timer1Int); playSound('levelup'); speak("Congratulations! 100 levels complete!");
+  let b=document.getElementById('finalBox1'); b.style.display='block';
+  b.innerHTML="<h2>🎉 CONGRATULATIONS! 🎉</h2><p>Natapos mo Level 1-100!<br>Points: "+pts1+"<br>Partners with consent: "+partners1+" / 100</p><p style='font-size:12px'>Fictional game only - Sa totoong buhay, consent + respeto + honest communication ang tunay na love potion.</p><button class='btn' onclick='startGame1()'>Play Again</button>";
+}
+
+// ===== GAME 2 - COUNTRY =====
+const POLY_COUNTRIES=[
+  {name:"Saudi Arabia",note:"Polygamy allowed - up to 4 wives with rules"},
+  {name:"United Arab Emirates",note:"Polygamy allowed with court permission"},
+  {name:"Senegal",note:"Polygamy common - up to 4 wives"},
+  {name:"Mali",note:"Polygamy allowed"},
+  {name:"Nigeria - Northern States",note:"Polygamy allowed in some states"},
+  {name:"Morocco",note:"Polygamy allowed but strict - need permission"},
+  {name:"Egypt",note:"Polygamy allowed - up to 4 wives"},
+  {name:"Indonesia - Aceh",note:"Polygamy allowed in some regions"},
+  {name:"Kenya",note:"Polygamy allowed - 2014 law"},
+  {name:"South Africa",note:"Polygamy allowed for some customary marriages"}
+];
+const MONO_COUNTRIES=[
+  {name:"Philippines",note:"MONOGAMY ONLY - 1 asawa lang legal! Ex vs third party = bawal!"},
+  {name:"United States",note:"MONOGAMY ONLY"},
+  {name:"United Kingdom",note:"MONOGAMY ONLY"},
+  {name:"Japan",note:"MONOGAMY ONLY"},
+  {name:"South Korea",note:"MONOGAMY ONLY"},
+  {name:"China",note:"MONOGAMY ONLY"},
+  {name:"Australia",note:"MONOGAMY ONLY"},
+  {name:"Canada",note:"MONOGAMY ONLY"},
+  {name:"Germany",note:"MONOGAMY ONLY"},
+  {name:"France",note:"MONOGAMY ONLY"}
+];
+let qList=[], qIdx=0, lives2=3, pts2=0, correct2=0, time2=10, timer2Int=null, curQ=null;
+function showReview(){
+  document.getElementById('reviewBox').style.display='block';
+  document.getElementById('quizBox').style.display='none';
+  document.getElementById('polyList').innerHTML=POLY_COUNTRIES.map(c=>"💘 <b>"+c.name+"</b> - "+c.note).join("<br>");
+  document.getElementById('monoList').innerHTML=MONO_COUNTRIES.map(c=>"🚫 <b>"+c.name+"</b> - "+c.note).join("<br>");
+  speak("Review muna! Polyamory countries lang pwede! Wag monogamy!");
+  document.getElementById('log2').textContent="Review: Poly = pwede in game, Mono = wag! Philippines = MONOGAMY ONLY!";
+}
+function startGame2(){
+  qList=[];
+  let all=[...POLY_COUNTRIES.map(c=>({name:c.name,isPoly:true,note:c.note})), ...MONO_COUNTRIES.map(c=>({name:c.name,isPoly:false,note:c.note}))];
+  qList=all.sort(()=>Math.random()-0.5).slice(0,20);
+  qIdx=0; lives2=3; pts2=0; correct2=0;
+  document.getElementById('finalBox2').style.display='none';
+  document.getElementById('reviewBox').style.display='none';
+  document.getElementById('quizBox').style.display='block';
+  updateHUD2(); speak("Country quiz started! Mabilisan! 10 seconds per question!");
+  nextCountryQ();
+}
+function resetGame2(){ clearInterval(timer2Int); document.getElementById('quizBox').style.display='none'; document.getElementById('reviewBox').style.display='block'; showReview(); }
+function updateHUD2(){
+  document.getElementById('qNum').textContent=(qIdx+1)+" / 20";
+  document.getElementById('lives2').textContent=lives2;
+  document.getElementById('points2').textContent=pts2;
+  document.getElementById('correct2').textContent=correct2;
+  document.getElementById('fill2').style.width=(qIdx/20*100)+"%";
+}
+function nextCountryQ(){
+  if(qIdx>=qList.length){ winGame2(); return; }
+  if(lives2<=0){ gameOver2(); return; }
+  curQ=qList[qIdx];
+  document.getElementById('quizQ').textContent="Question "+(qIdx+1)+" / 20 - Polyamory ba ito?";
+  document.getElementById('quizCountry').textContent=curQ.name;
+  document.getElementById('quizFeedback').textContent="";
+  speak("Is "+curQ.name+" polyamory or monogamy? Answer fast!");
+  updateHUD2(); startTimer2();
+}
+function startTimer2(){
+  clearInterval(timer2Int); time2=10; document.getElementById('timer2').textContent=time2;
+  timer2Int=setInterval(()=>{
+    time2--; document.getElementById('timer2').textContent=time2;
+    if(time2<=0){
+      clearInterval(timer2Int); lives2--; updateHUD2(); playSound('wrong'); speak("Time up! Late! Minus 1 life!");
+      document.getElementById('log2').textContent="⏰ TIME UP! "+curQ.name+" - "+(curQ.isPoly?"POLY":"MONO")+" - -1 Life!";
+      document.getElementById('quizFeedback').textContent="⏰ Late! Tamang sagot: "+(curQ.isPoly?"POLYAMORY - PWEDE":"MONOGAMY - WAG")+" - "+curQ.note;
+      if(lives2<=0){ gameOver2(); return; }
+      setTimeout(()=>{ qIdx++; nextCountryQ(); },1800);
+    }
+  },1000);
+}
+function answerCountry(isPolyAnswer){
+  clearInterval(timer2Int);
+  let correct = (isPolyAnswer===curQ.isPoly);
+  if(correct){
+    pts2+=100; correct2++; playSound('correct'); speak("Correct! "+curQ.name+" is "+(curQ.isPoly?"polyamory! Pwede!":"monogamy! Wag!"));
+    document.getElementById('quizFeedback').textContent="✅ CORRECT! +100! "+curQ.name+" - "+curQ.note;
+    document.getElementById('log2').textContent="✅ Correct! "+curQ.name+" - "+(curQ.isPoly?"POLY":"MONO");
+  } else {
+    lives2--; playSound('wrong'); speak("Wrong! Minus 1 life!");
+    document.getElementById('quizFeedback').textContent="❌ MALI! -1 Life! Tamang sagot: "+(curQ.isPoly?"POLYAMORY - PWEDE":"MONOGAMY - WAG")+" - "+curQ.note;
+    document.getElementById('log2').textContent="❌ Mali! "+curQ.name+" - "+(curQ.isPoly?"POLY":"MONO")+" - -1 Life!";
+    if(lives2<=0){ setTimeout(gameOver2,1200); return; }
+  }
+  updateHUD2();
+  setTimeout(()=>{ qIdx++; nextCountryQ(); },1800);
+}
+function gameOver2(){
+  clearInterval(timer2Int); playSound('gameover'); speak("Game over! Review ulit!");
+  let b=document.getElementById('finalBox2'); b.style.display='block';
+  b.innerHTML="<h2>💔 GAME OVER - COUNTRY QUIZ</h2><p>Score: "+pts2+"<br>Correct: "+correct2+" / 20</p><button class='btn' onclick='startGame2()'>Try Again</button> <button class='btn' onclick='showReview()'>Review Ulit</button>";
+}
+function winGame2(){
+  clearInterval(timer2Int); playSound('levelup'); speak("Congratulations! Country Master!");
+  let b=document.getElementById('finalBox2'); b.style.display='block';
+  b.innerHTML="<h2>🎉 CONGRATULATIONS! COUNTRY MASTER! 🎉</h2><p>Points: "+pts2+"<br>Correct: "+correct2+" / 20<br><br>Alam mo na: Polyamory countries lang pwede in game, wag monogamy! Philippines = Monogamy Only - Ex vs Third Party = Bawal!</p><button class='btn' onclick='startGame2()'>Play Again</button>";
+}
+updateHUD1(); showReview();
+</script>
+</body>
+</html>
